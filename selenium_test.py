@@ -28,15 +28,16 @@ class TestVisitor(TestCase):
         self.assertIn("Tasks list", header_text)
 
         # Добавление новой задачи
-        # input_task = self.browser.find_element(By.ID, 'id_new_task')  # исправлено на By.ID
-        # self.assertEqual(  # исправлено на assertEqual
-        #     input_task.get_attribute('placeholder'),
-        #     'Enter task'
-        # )
+        input_task = self.browser.find_element(By.ID, 'id_new_task')  # исправлено на By.ID
 
-        # Вводим задачу в поле
-        # input_task.send_keys('Learn Alembic')
-        #
+        self.assertEqual(  # исправлено на assertEqual
+            input_task.get_attribute('placeholder'),
+            'Enter task'
+        )
+
+        # Input task in field
+        input_task.send_keys('Learn Alembic')
+        time.sleep(10)
         # # Нажимаем Enter, чтобы добавить задачу
         # input_task.send_keys(Keys.ENTER)
         time.sleep(2)  # Можно заменить на WebDriverWait, но пока используем sleep для упрощения
