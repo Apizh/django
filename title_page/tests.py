@@ -26,8 +26,21 @@ class HomePageTest(TestCase):
     def test_can_save_POST_request(self):
         '''Test: Make safe post-request'''
         response = self.client.post('/', data={'item_text': 'New list item'})
+
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, "New list item")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/')
+
         self.assertNotIn('New list item', response.content.decode('utf-8'))
-        self.assertTemplateUsed(response, 'index.html')
+        #self.assertTemplateUsed(response, 'index.html')
+
+    def test_only_saves_items_when_necessary(self):
+        """Тест: сохраняет элементы только когда нужно"""
+        self.client.get('/')
+        self.assertEqual(Item.objects.count(), 0)
 
 
 class ItemModelTest(TestCase):
