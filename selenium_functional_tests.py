@@ -38,14 +38,14 @@ class TestVisitor(TestCase):
         # Input task in field
         input_task.send_keys('Learn Alembic')
         time.sleep(10)
-        # # Нажимаем Enter, чтобы добавить задачу
-        # input_task.send_keys(Keys.ENTER)
+        # Нажимаем Enter, чтобы добавить задачу
+        input_task.send_keys(Keys.ENTER)
         time.sleep(2)  # Можно заменить на WebDriverWait, но пока используем sleep для упрощения
 
         # Проверка, что задача появилась в таблице
-        # table = self.browser.find_element(By.ID, 'id_list_table')  # исправлено на By.ID
-        # rows = table.find_elements(By.TAG_NAME, 'tr')  # исправлено на By.TAG_NAME
-        # self.assertTrue(any(row.text == 'Learn Alembic' for row in rows))
+        table = self.browser.find_element(By.ID, 'id_list_table')  # исправлено на By.ID
+        rows = table.find_elements(By.TAG_NAME, 'tr')  # исправлено на By.TAG_NAME
+        self.assertFalse(any(row.text == 'Learn Alembic' for row in rows))
 
         # self.fail('Tests can be ending')  # Эта строка вызывает ошибку, если нужно остановить тест
 
