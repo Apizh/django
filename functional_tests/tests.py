@@ -1,12 +1,11 @@
 from selenium import webdriver
-from unittest import TestCase
+from django.test import LiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-import unittest
 import time
 
 
-class TestVisitor(TestCase):
+class TestVisitor(LiveServerTestCase):
     '''Testing new visitor'''
 
     def setUp(self):
@@ -19,7 +18,7 @@ class TestVisitor(TestCase):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         '''Test can be started'''
-        self.browser.get('http://localhost:8000/')  # добавлен полный URL
+        self.browser.get(self.live_server_url)  # добавлен полный URL
         # Проверка, что заголовок страницы правильный
         self.assertIn("Tasks Page", self.browser.title)
 
@@ -48,7 +47,3 @@ class TestVisitor(TestCase):
         self.assertFalse(any(row.text == 'Learn Alembic' for row in rows))
 
         # self.fail('Tests can be ending')  # Эта строка вызывает ошибку, если нужно остановить тест
-
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
