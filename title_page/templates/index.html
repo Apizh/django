@@ -10,8 +10,11 @@
         <input name="item_text" id="id_new_task" placeholder="Enter task"/>
         {% csrf_token %}
     </form>
+
     <table id="id_list_table">
-        <tr><td>{{ new_item_text }}</td></tr>
+        {% for item in items %}
+            <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+        {% endfor %}
     </table>
 </body>
 </html>

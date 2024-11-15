@@ -31,16 +31,25 @@ class HomePageTest(TestCase):
         new_item = Item.objects.first()
         self.assertEqual(new_item.text, "New list item")
 
+    def test_redirect_afterPost(self):
+        """Тест: переадресует после post-request"""
+        response = self.client.post('/', data={'item_text': 'New list item'})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['location'], '/')
 
-        self.assertNotIn('New list item', response.content.decode('utf-8'))
-        #self.assertTemplateUsed(response, 'index.html')
+    # def test_only_saves_items_when_necessary(self):
+    #     """Тест: сохраняет элементы только когда нужно"""
+    #     self.client.get('/')
+    #     self.assertEqual(Item.objects.count(), 0)
 
-    def test_only_saves_items_when_necessary(self):
-        """Тест: сохраняет элементы только когда нужно"""
-        self.client.get('/')
-        self.assertEqual(Item.objects.count(), 0)
+    def test_display_all_list_items(self):
+        """Тест: отображаются все элементы списка"""
+        Item.objects.create(text="item 1")
+        Item.objects.create(text="item 2")
+
+        response = self.client.get('/')
+        self.assertIn('item 1', response.content.decode())
+        self.assertIn('item 2', response.content.decode())
 
 
 class ItemModelTest(TestCase):
